@@ -1,0 +1,82 @@
+package practicenlearn;
+
+import java.util.Stack;
+
+public class ReverseLinkedListii {
+	
+	static class Node{		
+		int data;
+		Node next;
+		
+		public Node(int data) {
+			this.data = data;
+			this.next = null;			
+		}
+	}
+	
+	 public static Node reverseBetween(Node head, int m, int n) {
+		 int counter = 1;
+		 Stack<Node> stack = new Stack<Node>();
+		 Node node = head;
+		 Node lastNode = null;
+				 
+		 while(counter <= n) {			 
+			 if(counter >= m) {			   		   
+			   stack.push(new Node(node.data));
+			 }
+			 counter++;
+			 node = node.next;
+		 }
+		 
+		 if(node != null)
+			 lastNode = node;		 
+		 
+		 if(m == 1) {
+			 head = stack.pop();
+		 } 
+		 	 
+		 counter = 1;
+		 node = head;
+		 
+		 while(node != null) {
+			 
+			 System.out.println("Current node : " + node.data);
+			 
+			 if(counter >= m-1 && counter <= n-1) {
+				 Node latestNode = stack.pop();	
+				 System.out.println("latestNode data : " + latestNode.data);
+				 node.next = latestNode;				 
+			 }
+			 
+			 if(counter == n) {
+				 node.next = lastNode;
+				 break;
+			 }
+			 
+			 node = node.next;
+			 counter++;
+		 }
+		 return head;
+	}
+	 
+	 public static void main(String a[]) {
+		 Node node1 = new Node(1);
+		 node1.next = new Node(2);
+		 node1.next.next = new Node(3);
+		 node1.next.next.next = new Node(4);
+		 node1.next.next.next.next = new Node(5);
+		 
+		 Node reversedNode = reverseBetween(node1, 3, 4);
+		 
+		 while(reversedNode != null) {
+			 if(reversedNode.next != null)
+				 System.out.print(reversedNode.data + "-->");
+			 else
+				 System.out.print(reversedNode.data);
+				 
+			 reversedNode = reversedNode.next;
+		 }
+				 
+	 }
+
+}
